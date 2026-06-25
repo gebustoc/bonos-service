@@ -11,14 +11,17 @@ Comparte la base de datos y el JWT con casino-backend. Permite:
 Prefijo de rutas: /api/bonos  (para que nginx pueda enrutar por prefijo).
 """
 import os
+import time
 from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
 from .auth import usuario_actual
 from .db import conexion, dict_cursor, esperar_bd, init_schema
+START = time.time()
 
 
 @asynccontextmanager
@@ -153,3 +156,23 @@ def _json(obj: dict) -> str:
     import json
 
     return json.dumps(obj, ensure_ascii=False)
+
+
+@app.get("/livez")
+def livez():
+    return { "status": 'alive', "uptime": time.time()-START }
+
+
+@app.get("/readyz")
+def readyz():
+    try:
+        with conexion() as conn:
+            with dict_cursor(conn) as cur:
+                cur.execute("SELECT 1")
+        
+        return JSONResponse(status_code=200,content={ "status": 'ready', "db": 'up' })
+
+    except Exception as e:
+        return JSONResponse(status_code=503,content={ "status": 'not-ready', "db": 'down', "error": str(e) })
+
+        
