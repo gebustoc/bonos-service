@@ -40,3 +40,13 @@ spec:
             limits:
               cpu: "250m"
               memory: "128Mi"
+
+          env:
+              - name: DB_HOST
+                value: casino-db
+              - name: POSTGRES_USER
+                value: "casino"
+              - name: POSTGRES_PASSWORD
+                value: "casino"
+              - name: POSTGRES_DB
+                value: "casino_db"
