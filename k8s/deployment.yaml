@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: estadisticas-service
+  name: bonos-service
   labels:
-    app: estadisticas-service
+    app: bonos-service
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: estadisticas-service
+      app: bonos-service
   template:
     metadata:
       labels:
-        app: estadisticas-service
+        app: bonos-service
     spec:
       containers:
-        - name: estadisticas-service
-          image: <ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/estadisticas-service:latest
+        - name: bonos-service
+          image: <ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/bonos-service:latest
           ports:
             - containerPort: 3002
           # Probe de "vivo": si falla, Kubernetes reinicia el contenedor.

@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: products-service
+  name: bonos-service
   labels:
-    app: products-service
+    app: bonos-service
 spec:
   # ClusterIP = solo accesible DENTRO del clúster.
-  # Otros servicios lo alcanzan vía DNS interno: http://products-service:8001
+  # Otros servicios lo alcanzan vía DNS interno: http://bonos-service:8001
   type: ClusterIP
   selector:
-    app: products-service
+    app: bonos-service
   ports:
     - name: http
       protocol: TCP
