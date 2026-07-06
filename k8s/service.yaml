@@ -11,7 +11,7 @@ spec:
   selector:
     app: bonos-service
   ports:
-    - name: http
+    - name: bonos-ext
       protocol: TCP
-      port: 8001        # puerto del Service (DNS interno)
+      port: 3001        # puerto del Service (DNS interno)
       targetPort: 3001  # puerto del contenedor
